@@ -1,0 +1,32 @@
+.Home,.Create,.Contact{
+    transition: .2s ease-in-out;
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+.Home:hover ,.Create:hover, .Contact:hover{
+    border-bottom: 1px solid #0d6efd !important;
+    color: #0d6efd !important;
+    background-color: transparent !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    transform: scale(1.02);
+}
+
+.hideandshow{
+}
+
+@media only screen and (max-width:1000px){
+    .hideandshow{
+        display: none !important ;
+    }
+}
+@media only screen and (max-height:570px){
+    .form1{
+        margin-top: 300px;
+    }
+}
+@media only screen and (max-height:650px){
+    .form2{
+        margin-top: 300px;
+    }
+}

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const Register = () => {
     return (
-        <div className='bg-dark vh-100'>
+        <div className=' vh-100'>
             {/* <center className='bi bi-basket' style={{ fontSize: "50vh" }}></center> */}
-            <div className='container bg-dark  d-flex justify-content-center align-items-center vh-100'>
-                <form className='form-control' style={{ minWidth: "350px", maxWidth: "550px" }} >
+            <div className='container  d-flex justify-content-center align-items-center vh-100'>
+                <form className='form2 form-control alert alert-success shadow p-5' style={{ minWidth: "350px", maxWidth: "550px" }} >
                     <center className='mb-3'><h1>Registration Form</h1></center>
                     <div className='form-group mb-2 fw-bold'>
                         <label>Your Complete Name</label>

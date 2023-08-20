@@ -3,19 +3,19 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { Link } from 'react-router-dom'
 const Login = () => {
     return (
-        <div className='bg-dark'>
+        <>
             {/* <center class="bi bi-moon-stars-fill fw-bolder" style={{ fontSize: "50vh" }}></center> */}
-            <div className='container d-flex justify-content-center align-items-center ' style={{ height: "93vh" }}>
-                <form className='form-control p-2 shadow border border-primary border-1' style={{ maxWidth: "550px", minWidth: "350px" }}>
+            <div className='container d-flex justify-content-center align-items-center ' style={{ height: "100vh" }}>
+                <form className='form1 form-control alert alert-dark text-black px-4 py-3 shadow border border-primary border-1 fw-bolder' style={{ maxWidth: "500px", minWidth: "350px" }}>
                     <center className='fw-bolder mb-4'><h1>Login Form</h1></center>
                     <div class="form-outline mb-4">
-                        <input type="email" id="form2Example1" class="form-control" />
                         <label class="form-label" for="form2Example1">Email address</label>
+                        <input type="email" id="form2Example1" class="form-control" />
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="password" id="form2Example2" class="form-control" />
                         <label class="form-label" for="form2Example2">Password</label>
+                        <input type="password" id="form2Example2" class="form-control" />
                     </div>
 
                     <div class="row mb-4">
@@ -55,7 +55,7 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </>
     )
 }
 

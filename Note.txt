@@ -13,3 +13,4 @@ export default defineConfig({
 })
 
 bootstap icons wasn't working hence this is the method should use to make it work
+we are using vite + react and to run this command is npm  run dev
