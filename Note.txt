@@ -14,3 +14,8 @@ export default defineConfig({
 
 bootstap icons wasn't working hence this is the method should use to make it work
 we are using vite + react and to run this command is npm  run dev
+
+create a table first using the server js.. and then after use the
+ UserModel to make it work properly and to grant the permission we
+  need to run MySQL and has to run SQL query to provide 
+  previlleges to all users and then flush privilleges
