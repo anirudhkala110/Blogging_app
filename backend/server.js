@@ -19,6 +19,8 @@ app.use(cors({
 
 doenv.config()
 app.use(cookieParser())
+app.use(express.json())
+app.use(bodyParser.json({ extends: true }))
 
 const db = mysql.createConnection({
     user: process.env.DATABASE_USER,
@@ -27,7 +29,7 @@ const db = mysql.createConnection({
     password: process.env.DATABASE_PASS,
 })
 
-const port = process.env.PORT
+const port = process.env.PORT || 8093
 
 /* Registration API  */
 app.get('/', (req, res) => {
@@ -51,9 +53,14 @@ app.get('/', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    UserModel.create(req.body)
-        .then(user => res.json(user))
-        .catch(err => res.json(err))
+    const username = req.body.values.username
+    const password = req.body.values.password
+    const cpassword = req.body.values.cpassword
+    const phone = req.body.values.phone
+    console.log(req.body.values)
+    // UserModel.create(req.body)
+    //     .then(user => res.json(user))
+    //     .catch(err => res.json(err))
 
 })
 

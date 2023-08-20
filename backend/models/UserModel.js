@@ -50,16 +50,13 @@ const UserModel = sequelize.define('userlogin', {
         unique: true
     }
 });
-const port = process.env.PORT2
 // Sync models with database and start the server
-sequelize.sync({ force: true }) // This will create the table if it doesn't exist
+sequelize.sync({ alter: true }) // This will create the table if it doesn't exist and if exists then delete the old one and then create
+    // sequelize.sync({ force: true })  This will create the table if it doesn't exist and if exists then delete the old one and then create
     .then(() => {
-        console.log('Tables synchronized');
-        app.listen(port, () => {
-            console.log(`\n\nRunning Backend Side at http://localhost:${port}\n\nWithout any Error`);
-        });
+        console.log('\n\nTables synchronized\n\n');
     })
     .catch(error => {
-        console.error('Error synchronizing tables:', error);
+        console.error('\nError synchronizing tables:', error, "\n\n");
     });
 export default UserModel

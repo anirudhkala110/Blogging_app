@@ -12,7 +12,9 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(values)
-        axios.post('http://localhost:8093/register')
+        axios.post('http://localhost:8093/register', values)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     }
     return (
         <div className=' vh-100'>
