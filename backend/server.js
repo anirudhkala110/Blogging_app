@@ -8,6 +8,7 @@ import path from "path"
 import bodyParser from "body-parser"
 import doenv from 'dotenv'
 import UserModel from './models/UserModel.js';
+import PostModel from "./models/PostModel.js";
 import bcrypt from 'bcryptjs'
 
 
@@ -179,7 +180,7 @@ app.post('/login', (req, res) => {
                         return res.json({ msg: "Password Didn't Match. .  Please try again !", msg_type: "error" })
                     }
                     else {
-                        const token = jwt.sign({ email: result[0].email, username: result[0].name }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.EXPIRES_IN })
+                        const token = jwt.sign({ email: result[0].email, username: result[0].name, id: result[0].id }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.EXPIRES_IN })
                         res.cookie('token', token)
                         return res.json({ msg: "Login Successfully . . .", msg_type: "good" })
                     }
@@ -204,6 +205,7 @@ const verifyUser = (req, res, next) => {
             } else {
                 req.email = decoded.email
                 req.username = decoded.username
+                req.userId = decoded.id
                 next()
             }
         })
@@ -224,6 +226,58 @@ app.get('/logout', (req, res) => {
 })
 
 /* Logout Ends */
+
+/* Uploading the post with images */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Public/Images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+    }
+})
+
+const upload = multer({
+    storage: storage
+})
+
+
+app.post('/create', verifyUser, upload.single('image'), (req, res) => {
+    console.log("User ID : ", req.userId)
+    console.log("Backend File Storing Processing . . .")
+    console.log(req.file)
+    //This method is at the starting to create the table 
+    // const creatingTable = "CREATE TABLE `posts` (`id` INT NOT NULL ,`title` VARCHAR(255) NOT NULL,`description` TEXT(5000) NOT NULL,`file` VARCHAR(255) NOT NULL,PRIMARY KEY (`id`)"
+    // db.query(creatingTable, (err, respond) => {
+    //     if (err) {
+    //         console.log("Table Already Exists : Posts")
+    //         const sql = 'SELECT * from Posts'
+    //         db.query(sql, (err, data) => {
+    //             if (err) {
+    //                 console.log(err)
+    //             } else {
+    //                 console.log(data)
+    //                 return res.send(data)
+    //             }
+    //         })
+    //     }
+    //     else {
+    //         console.log("Table Created Named as : Posts")
+    //     }
+    // })
+
+    //But this time we will use the PostModel
+    PostModel.create({ userId: req.userId, title: req.body.title, description: req.body.description, file: req.file.filename })
+        .then(result => {
+            console.log(result)
+            res.json(result)
+        })
+        .catch(err => {
+            console.log(err)
+            res.json(err)
+        })
+})
+/* Uploading the post with images Ends */
 
 app.listen(port, () => {
     console.log("Running Backend Side at ", `${port}`)

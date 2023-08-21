@@ -24,39 +24,41 @@ const sequelize = new Sequelize({
     password: process.env.DATABASE_PASS
 });
 
-const UserModel = sequelize.define('userlogin', {
+const PostModel = sequelize.define('posts', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: false,
+    },
+    title: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
-        type: DataTypes.STRING,
+    description: {
+        type: DataTypes.TEXT,
         allowNull: false,
-        unique: true
+        validate: {
+            len: [0, 5000] // Ensure the length is between 0 and 5000 characters
+        }
     },
-    password: {
+    file: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    phone: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        unique: true
-    }
 });
 // Sync models with database and start the server
 // sequelize.sync({ alter: true })  This will create the table if it doesn't exist and if exists then delete the old one and then create
-sequelize.sync({ force: false }) // This will create the table if it doesn't exist and if exists then delete the old one and then create
+sequelize.sync({ force: false }) // This will create the table if it doesn't exist and if exists then delete the old one and then create hance we use false in place of true so make it ture for the first run and then turn to false
     .then(() => {
-        console.log('\n\nTables synchronized\n\n');
+        console.log('\n\nPosts Tables synchronized\n\n');
     })
     .catch(error => {
         console.error('\nError synchronizing tables:', error, "\n\n");
     });
-export default UserModel
+export default PostModel
