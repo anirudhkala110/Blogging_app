@@ -191,6 +191,40 @@ app.post('/login', (req, res) => {
 
 /* Login API Ends*/
 
+/* User Logged In or Not */
+
+const verifyUser = (req, res, next) => {
+    const token = req.cookies.token
+    if (!token) {
+        return res.json({ msg: "Token is not available", msg_type: "error" })
+    } else {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+            if (err) {
+                return res.json("Token is wrong")
+            } else {
+                req.email = decoded.email
+                req.username = decoded.username
+                next()
+            }
+        })
+    }
+}
+
+app.get('/loggin', verifyUser, (req, res) => {
+    return res.json({ email: req.email, username: req.username })
+})
+
+/* User Logged In or Not */
+
+/* Logout */
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('token')
+    return res.json({ msg: "Logout Successful . . .", msg_type: "good" })
+})
+
+/* Logout Ends */
+
 app.listen(port, () => {
     console.log("Running Backend Side at ", `${port}`)
 })

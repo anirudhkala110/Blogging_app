@@ -75,7 +75,7 @@ const Register = () => {
                     </div>
                     <button type='submit' className='btn btn-success w-100 my-2'>Register</button>
                     <center className='fw-bolder'>Already have an Account?</center>
-                    <Link to='/' type='submit' className='btn btn-primary w-100 text-decoration-none'>Login</Link>
+                    <Link to='/login' type='submit' className='btn btn-primary w-100 text-decoration-none'>Login</Link>
                 </form>
 
             </div>

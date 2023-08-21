@@ -3,12 +3,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { Link, useNavigate } from 'react-router-dom'
 import Typewriter from 'typewriter-effect'
 import axios from 'axios'
+axios.defaults.withCredentials = true
 const Login = () => {
     const [values, setValues] = useState({
         email: '',
         password: '',
     })
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [hide1, setHide1] = useState(true)
     const [msg, setMsg] = useState('')
@@ -16,17 +17,13 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('http://localhost:8093/login', { ...values, email: values.email, password: values.password })
-            // axios.get('http://localhost:8093/')
             .then(res => {
                 console.log(res)
                 setMsg(res.data.msg)
                 setMsg_type(res.data.msg_type)
                 if (res.data.msg_type === 'good') {
                     setLoading(true)
-                    setInterval(() => {
-                        setLoading(false)
-                        navigate('/Home')
-                    }, 2000)
+                    navigate('/')
                 }
             })
             .catch(err => console.log(err))
@@ -53,7 +50,7 @@ const Login = () => {
                                 strings: [". . ."]
                             }} 
                         />*/}
-                        <div class="spinner-border ms-3" role="status" style={{fontSize:"10px"}}>
+                        <div class="spinner-border ms-3 spinner-border-sm" role="status" >
                         </div>
                     </div>}
                     <center className='fw-bolder mb-4'><h1>Login Form</h1></center>
