@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Typewriter from 'typewriter-effect'
 import axios from 'axios'
 const Login = () => {
     const [values, setValues] = useState({
         email: '',
         password: '',
     })
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
     const [hide1, setHide1] = useState(true)
     const [msg, setMsg] = useState('')
     const [msg_type, setMsg_type] = useState('')
@@ -18,9 +21,13 @@ const Login = () => {
                 console.log(res)
                 setMsg(res.data.msg)
                 setMsg_type(res.data.msg_type)
-                // setInterval(() => {
-                //     setMsg(null)
-                // }, 5000)
+                if (res.data.msg_type === 'good') {
+                    setLoading(true)
+                    setInterval(() => {
+                        setLoading(false)
+                        navigate('/Home')
+                    }, 2000)
+                }
             })
             .catch(err => console.log(err))
     }
@@ -37,11 +44,23 @@ const Login = () => {
             {/* <center class="bi bi-moon-stars-fill fw-bolder" style={{ fontSize: "50vh" }}></center> */}
             <div className='container d-flex justify-content-center align-items-center ' style={{ height: "100vh" }}>
                 <form className='form1 form-control alert alert-dark text-black px-4 py-3 shadow border border-primary border-1 fw-bolder' style={{ maxWidth: "500px", minWidth: "350px" }} onSubmit={handleSubmit}>
+                    {loading && <div className='fw-bold d-flex'>Loading Home Page . . .
+                        {/* <Typewriter
+                            options={{
+                                autoStart: true,
+                                loop: true,
+                                delay: .1,
+                                strings: [". . ."]
+                            }} 
+                        />*/}
+                        <div class="spinner-border ms-3" role="status" style={{fontSize:"10px"}}>
+                        </div>
+                    </div>}
                     <center className='fw-bolder mb-4'><h1>Login Form</h1></center>
                     {msg && <center className={`w-100 fw-bolder ${msg_type === "error" ? 'alert alert-danger d-flex justify-content-between' : 'alert d-flex justify-content-between alert-warning'}`}>{msg} <i className='bi bi-x fs-4' style={{ cursor: "pointer" }} onClick={e => handleClose()}></i></center>}
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example1">Email address</label>
-                        <input type="email" id="form2Example1" class="form-control" onChange={e => setValues({ ...values, email: e.target.value })} required/>
+                        <input type="email" id="form2Example1" class="form-control" onChange={e => setValues({ ...values, email: e.target.value })} required />
                     </div>
 
                     <div class="form-outline mb-4">
