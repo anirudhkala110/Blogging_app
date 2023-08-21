@@ -115,7 +115,7 @@ app.post('/register', async (req, res) => {
                     //     })
                     //     .catch(err => console.log())
                     console.log("Similar Email Found 0")
-                    let hashPassword =await bcrypt.hash(password,10)
+                    let hashPassword = await bcrypt.hash(password, 10)
                     console.log("Hased Password : ", hashPassword)
                     const registerUser = 'INSERT INTO `userlogin` (name, email, password, phone) VALUES (?,?,?,?) '
                     const result = await db.promise().query(registerUser, [username, email, hashPassword, phone]);
@@ -141,6 +141,55 @@ app.post('/register', async (req, res) => {
 
 /* Registration API  Completed*/
 
+
+/* Login API */
+
+app.post('/login', (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+    const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,6}$/;
+    if (!email.match(emailRegex)) {
+        return res.json({ msg: "Invalid email format", msg_type: 'error' });
+    }
+    // if (!password.match(passwordRegex)) {
+    //     return res.json({ msg: "Password must have at least 1 capital letter, 1 small letter, 1 number, and 1 special character", msg_type: 'error' });
+    // }
+    //Directly in MongoDB
+    //     UserModel.findOne({ email: email })
+    //         .then(user => {
+    //             if (user) {
+    //                  Now we check the password and other functionality
+    //             } else {
+    //                 return res.json("User Doesn't Exists")
+    //             }
+    //         })
+    const chkEmail = "SELECT * FROM userlogin WHERE email=?"
+    db.query(chkEmail, [email], (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            if (result.length <= 0) {
+                return res.json({ msg: "Email Doesn't Exists. . Please Register First .", msg_type: "error" })
+            }
+            else {
+                bcrypt.compare(password, result[0].password, (err, findout) => {
+                    if (!findout) {
+                        return res.json({ msg: "Password Didn't Match. .  Please try again !", msg_type: "error" })
+                    }
+                    else {
+                        const token = jwt.sign({ email: result[0].email, username: result[0].name }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.EXPIRES_IN })
+                        res.cookie('token', token)
+                        return res.json({ msg: "Login Successfully . . .", msg_type: "good" })
+                    }
+                })
+            }
+        }
+    })
+})
+
+/* Login API Ends*/
 
 app.listen(port, () => {
     console.log("Running Backend Side at ", `${port}`)
