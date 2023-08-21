@@ -51,8 +51,8 @@ const UserModel = sequelize.define('userlogin', {
     }
 });
 // Sync models with database and start the server
-sequelize.sync({ alter: true }) // This will create the table if it doesn't exist and if exists then delete the old one and then create
-    // sequelize.sync({ force: true })  This will create the table if it doesn't exist and if exists then delete the old one and then create
+// sequelize.sync({ alter: true })  This will create the table if it doesn't exist and if exists then delete the old one and then create
+    sequelize.sync({ force: true }) // This will create the table if it doesn't exist and if exists then delete the old one and then create
     .then(() => {
         console.log('\n\nTables synchronized\n\n');
     })
