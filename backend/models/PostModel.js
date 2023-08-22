@@ -51,6 +51,10 @@ const PostModel = sequelize.define('posts', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    postedby: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 });
 // Sync models with database and start the server
 // sequelize.sync({ alter: true })  This will create the table if it doesn't exist and if exists then delete the old one and then create

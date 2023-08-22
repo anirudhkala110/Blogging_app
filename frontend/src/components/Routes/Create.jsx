@@ -17,7 +17,7 @@ const Create = () => {
         const formData = new FormData()
         formData.append('title', title)
         formData.append('description', description)
-        formData.append('image', file)
+        formData.append('file', file)
         console.log(formData)
         axios.post('http://localhost:8093/create', formData)
             .then(res => {

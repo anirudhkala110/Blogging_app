@@ -19,3 +19,5 @@ create a table first using the server js.. and then after use the
  UserModel to make it work properly and to grant the permission we
   need to run MySQL and has to run SQL query to provide 
   previlleges to all users and then flush privilleges
+
+  col-lg- is for Nest Hub

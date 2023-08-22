@@ -22,6 +22,7 @@ app.use(cors({
 doenv.config()
 app.use(cookieParser())
 app.use(express.json())
+app.use(express.static('Public')) //This is for file access
 // app.use(bodyParser.json({ extends: true }))
 
 const db = mysql.createConnection({
@@ -203,9 +204,10 @@ const verifyUser = (req, res, next) => {
             if (err) {
                 return res.json("Token is wrong")
             } else {
-                req.email = decoded.email
-                req.username = decoded.username
-                req.userId = decoded.id
+                req.email = decoded.email;
+                req.username = decoded.username;
+                req.userId = decoded.id;
+                req.postedby = decoded.username;
                 next()
             }
         })
@@ -242,10 +244,10 @@ const upload = multer({
 })
 
 
-app.post('/create', verifyUser, upload.single('image'), (req, res) => {
+app.post('/create', verifyUser, upload.single('file'), (req, res) => {
     console.log("User ID : ", req.userId)
+    console.log("User Name : ", req.username)
     console.log("Backend File Storing Processing . . .")
-    console.log(req.file)
     //This method is at the starting to create the table 
     // const creatingTable = "CREATE TABLE `posts` (`id` INT NOT NULL ,`title` VARCHAR(255) NOT NULL,`description` TEXT(5000) NOT NULL,`file` VARCHAR(255) NOT NULL,PRIMARY KEY (`id`)"
     // db.query(creatingTable, (err, respond) => {
@@ -267,9 +269,8 @@ app.post('/create', verifyUser, upload.single('image'), (req, res) => {
     // })
 
     //But this time we will use the PostModel
-    PostModel.create({ userId: req.userId, title: req.body.title, description: req.body.description, file: req.file.filename })
+    PostModel.create({ userId: req.userId, title: req.body.title, description: req.body.description, file: req.file.filename, postedby: req.postedby })
         .then(result => {
-            console.log(result)
             return res.json({ msg: "Uploaded", msg_type: "good" })
         })
         .catch(err => {

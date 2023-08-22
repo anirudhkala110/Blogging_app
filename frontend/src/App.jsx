@@ -7,6 +7,7 @@ import Register from './components/Authrization/Register'
 import { Home } from './components/Routes/Home'
 import axios from 'axios'
 import Create from './components/Routes/Create'
+import Footer from './components/Navbar/Footer'
 
 export const userContext = createContext()
 
@@ -32,6 +33,7 @@ function App() {
           <Route exact path='/register' element={<Register />} />
           <Route exact path='/create' element={<Create />} />
         </Routes>
+        <Footer/>
       </Router>
     </userContext.Provider>
   )

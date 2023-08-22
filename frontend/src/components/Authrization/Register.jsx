@@ -44,7 +44,7 @@ const Register = () => {
             <div className='container  d-flex justify-content-center align-items-center vh-100'>
                 <form className='form2 form-control alert alert-success shadow p-5' onSubmit={handleSubmit} style={{ minWidth: "350px", maxWidth: "550px" }} >
                     <center className='mb-3'><h1>Registration Form</h1></center>
-                    {msg && <center className={`w-100 fw-bolder ${msg_type === "error" ? 'alert alert-danger d-flex justify-content-between' : 'alert d-flex justify-content-between alert-warning'}`}>{msg} <i className='bi bi-x fs-4' style={{ cursor: "pointer" }} onClick={e => handleClose()}></i></center>}
+                    {msg && <center className={`w-100 fw-bolder d-flex justify-content-between align-items-center ${msg_type === "error" ? 'alert alert-danger ' : 'alert alert-warning  '}`}>{msg} <i className='bi bi-x fs-4' style={{ cursor: "pointer" }} onClick={e => handleClose()}></i></center>}
                     <div className='form-group mb-2 fw-bold'>
                         <label>Your Complete Name</label>
                         <input type='text' className='form-control' onChange={e => setValues({ ...values, username: e.target.value })} required />
