@@ -270,15 +270,25 @@ app.post('/create', verifyUser, upload.single('image'), (req, res) => {
     PostModel.create({ userId: req.userId, title: req.body.title, description: req.body.description, file: req.file.filename })
         .then(result => {
             console.log(result)
-            res.json(result)
+            return res.json({ msg: "Uploaded", msg_type: "good" })
         })
         .catch(err => {
             console.log(err)
-            res.json(err)
+            return res.json({ msg: "Upload Failed", msg_type: "error" })
         })
 })
 /* Uploading the post with images Ends */
 
+
+/* Showing the data on home page */
+
+app.get('/get-all-posts', (req, res) => {
+    PostModel.findAll()
+        .then(posts => { return res.json(posts) })
+        .catch(err => console.log(err))
+})
+
+/* Showing the data on home page Ends */
 app.listen(port, () => {
     console.log("Running Backend Side at ", `${port}`)
 })

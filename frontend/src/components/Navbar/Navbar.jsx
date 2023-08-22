@@ -43,7 +43,7 @@ const Navbar = () => {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 {user.username && <div className='hideandshow '>
-                    <Link to="" className="btn bt-outline-info fw-bold  me-5 Home" >Home</Link>
+                    <Link to="/" className="btn bt-outline-info fw-bold  me-5 Home" >Home</Link>
                     <Link to="/create" className="btn bt-outline-success fw-bold  mx-2 Create" >Create</Link>
                     <Link to="" className="btn bt-outline-warning fw-bold  ms-5 Contact" >Contact</Link>
                 </div>}
@@ -65,7 +65,7 @@ const Navbar = () => {
                 </div>
                 <div className=' '>
                     {user.username ? <center>
-                        <div><Link to="" className="btn btn-outline-info fw-bold mx-1 mt-3">Home</Link></div>
+                        <div><Link to="/" className="btn btn-outline-info fw-bold mx-1 mt-3">Home</Link></div>
                         <div><Link to="/create" className="btn btn-outline-success fw-bold mx-1 mt-3">Create</Link></div>
                         <div><Link to="" className="btn btn-outline-warning fw-bold mx-1 mt-3">Contact</Link></div>
                         <div>
