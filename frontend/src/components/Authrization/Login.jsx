@@ -23,7 +23,8 @@ const Login = () => {
                 setMsg_type(res.data.msg_type)
                 if (res.data.msg_type === 'good') {
                     setLoading(true)
-                    navigate('/')
+                    // navigate('/')
+                    window.location.href='/'
                 }
             })
             .catch(err => console.log(err))

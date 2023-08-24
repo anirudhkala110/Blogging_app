@@ -1,61 +1,118 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import Typewriter from 'typewriter-effect'
-import Aos from 'aos'
-export const Home = () => {
-  const [post, setPost] = useState([])
-  useEffect(() => {
-    Aos.init()
-    axios.get('http://localhost:8093/get-all-posts')
-      .then(posts => {
-        console.log(posts.data)
-        setPost(posts.data)
-      })
-      .catch(err => console.log(err))
-    const interval = setInterval(() => {
-      fetchData(); // Fetch data every minute
-    }, 60000); // 60000 milliseconds = 1 minute
+import axios from 'axios';
+import React, { useEffect, useState, useRef } from 'react';
+import Typewriter from 'typewriter-effect';
+import Aos from 'aos';
+import { Link } from 'react-router-dom';
+import AddLeft from '../Adds/AddLeft';
+import AddRight from '../Adds/AddRight';
 
-    return () => {
-      clearInterval(interval); // Clean up the interval on component unmount
-    };
-  })
+export const Home = () => {
+  const bottomRef = useRef(null);
+
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    Aos.init();
+    axios
+      .get('http://localhost:8093/get-all-posts')
+      .then((posts) => {
+        setPost(posts.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const scrollToRef = (ref) => {
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div>
-      <div className='bg-black w-100 displaymethod py-5 px-3'>
-        <div className='text-light'>This is for the exrenal information</div>
-        <div className=' container rounded database' style={{ height: "100vh", boxShadow: " 0px 2px 12px 1px" }}>
-          <center className='fs-1 fw-bolder text-light  ' style={{ borderBottom: "1px solid" }}>Writer's Thoughts</center>
-          {
-            post.map((post, i) => (
-              <>
-                <div className=' mt-5 text-light btn fw-bold bi-text-left'>Posted By&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; {post.postedby}</div>
-                <div className='row mb-5 mx-2'>
-                  <hr className='' style={{ backgroundImage: "-webkit-linear-gradient(black,rgb(235 12 114),rgb(235 12 114),black)", height: "12px" }} />
-                  <div className='card col-md-12 col-sm-12 col-xl-12 col-lg-10 p-3' data-aos="fade-right" data-aos-delay={i * 1000} key={i} style={{ background: "linear-gradient(45deg, #04031ef2, #000104)", border: "2px solid rgb(135 12 54)" }}>
-                    <div className='card-header alert-warning alert border-bottom-dark border fs-2 fw-bolder'>
+      <div className='bg-white w-100 displaymethod py-1 px-1'>
+        <div className='text-light bg-dark p-3' style={{ maxWidth: '300px' }}>
+          <AddLeft />
+        </div>
+        <div className='mx-2 shadow-lg'>
+          <center
+            className='fs-1 fw-bolder text-black  '
+            style={{ borderBottom: '1px solid', letterSpacing: '10px' }}
+          >
+            Writer's Thoughts
+          </center>
+          <div
+            className=' container rounded database pb-2'
+            style={{ height: '100vh', boxShadow: ' ' }}
+          >
+            <a
+              href='#bottom'
+              className='btn btn-primary fs-4 fw-bold my-1'
+              onClick={() => scrollToRef(bottomRef)}
+            >
+              <i id='top' className='bi bi-arrow-down-circle-fill'></i>
+            </a>
+            {post.map((post, i) => (
+              <Link
+                to={`/post/${post.id}/${post.postedby}`}
+                className='text-decoration-none'
+                data-aos='fade-right'
+                data-aos-delay={i * 1000}
+                key={i}
+              >
+                <div
+                  className='row shadow my-5 mx-2'
+                  ref={i === post.length - 1 ? bottomRef : null}
+                >
+                  <div className='card col-md-12 col-sm-12 col-xl-12 col-lg-10 pb-3 '>
+                    <div className='bg-light rounded shadow my-1 px-3 py-3'>
                       <Typewriter
+                        onInit={(typewriter) => {
+                          typewriter
+                            .pauseFor(1000)
+                            .typeString(post.title)
+                            .start();
+                        }}
                         options={{
-                          delay: 200,//This is the Typing Speed
+                          delay: 50,
                           autoStart: true,
                           loop: true,
-                          strings: [`${post.title}`]
-                        }} />
+                        }}
+                        className=''
+                      />
                     </div>
-                    <div className='card-body'>
-                      <center><img className='img-fluid hovering border border-primary rounded-cirlce p-1 alert alert-primary' data-aos="fade-up" style={{ maxWidth: "", maxHeight: "500px" }} src={`http://localhost:8093/Images/${post.file}`} /></center>
-                      <div className='card-text text-light fw-bold'>
+                    <div className='card-body d-flex justify-content-start'>
+                      <div className='me-5'>
+                        <img
+                          className='img-fluid hovering border border-primary rounded-2 rounded p-1 alert alert-primary'
+                          data-aos='fade-up'
+                          style={{ maxWidth: '200px', maxHeight: '200px' }}
+                          src={`http://localhost:8093/Images/${post.file}`}
+                        />
+                      </div>
+                      <div className='card-text fw-bold description-container'>
                         {post.description}
                       </div>
                     </div>
+                    <div className='border shadow text-dark mx-2 my-1 btn fw-bold bi-text-left'>
+                      Posted By&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;{' '}
+                      {post.postedby},<br /> Created At : {post.createdAt},<br /> Last Updated At :{' '}
+                      {post.updatedAt}
+                    </div>
                   </div>
-                  <hr className='' style={{ backgroundImage: "-webkit-linear-gradient(left,black,rgb(235 12 114),rgb(235 12 114),black)", height: "12px" }} />
-                </div></>
-            ))
-          }
+                </div>
+              </Link>
+            ))}
+            <a
+              href='#top'
+              className='btn btn-primary fs-4 fw-bold my-1'
+              onClick={() => scrollToRef(bottomRef)}
+            >
+              <i id='bottom' className='bi bi-arrow-up-circle-fill'></i>
+            </a>
+          </div>
         </div>
-        <div className='text-light'>This is also for the adds </div>
+        <div className='text-light bg-dark p-3' style={{ maxWidth: '300px' }}>
+          <AddRight />
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};

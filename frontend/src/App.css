@@ -21,14 +21,31 @@ width: 0;
 }
 .displaymethod{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
-@media only screen and (max-width:1000px) {
+@media only screen and (max-width:1200px) {
     .displaymethod{
         display: block !important;
     }
     .displaymethod div{
-        margin-top: 2vh;
+        margin-top: 0.1vh;
     }
    
 }
+
+.description-container {
+    max-height: 3em; /* Adjust to desired height */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    transition: .2s ease-in-out !important;
+  }
+.btnhover{
+    transition: .2s ease-in-out !important;
+}
+  .btnhover:hover{
+box-shadow: 0px 0px 10px 0px grey;
+transform: scale(1.11);
+  }

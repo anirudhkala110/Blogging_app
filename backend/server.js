@@ -290,6 +290,46 @@ app.get('/get-all-posts', (req, res) => {
 })
 
 /* Showing the data on home page Ends */
+
+/* Showing Post in the seperate page */
+
+app.get('/read-post/:id/:postedby', (req, res) => {
+    const id = req.params.id
+    const postedby = req.params.postedby
+    console.log(id, postedby)
+    // PostModel.findById({ id: id }) findById is not for sequilize
+    PostModel.findByPk(id)
+        .then(result => { return res.json(result) })
+        .catch(err => console.log(err))
+})
+
+/* Showing Post in the seperate page Ends */
+
+
+/* Edit the post Data */
+app.put('/edit-post/:id', (req, res) => {
+    const id = req.params.id
+    PostModel.update({ title: req.body.title, description: req.body.description }, { where: { id: id } })
+        .then(result => {
+            return res.json({ msg: "Update Successful . . .", msg_type: "good" })
+        })
+        .catch(err => console.log(err))
+})
+/* Edit the post data Ends  */
+
+
+/* Deleting the post */
+app.delete('/delete-post/:id', (req, res) => {
+    PostModel.destroy({ where: { id: req.params.id } })
+        .then(result => {
+            return res.json({ msg: "Post Deleted Successfuly. . . ", msg_type: "delete" })
+        })
+        .catch(err => console.log(err))
+})
+/* Deleting post ends */
+
+/* Running the backend  */
 app.listen(port, () => {
     console.log("Running Backend Side at ", `${port}`)
 })
+/* Running the backend  Ends */

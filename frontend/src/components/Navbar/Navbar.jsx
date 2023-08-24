@@ -25,8 +25,8 @@ const Navbar = () => {
             .then(res => {
                 console.log()
                 if (res.data.msg_type === "good") {
-                    // navigate('/login')
-                    window.location.href = '/'
+                    navigate('/')
+                    // window.location.href = '/'
                 }
 
             })
@@ -43,7 +43,7 @@ const Navbar = () => {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div className='hideandshow '>
-                    <a herf="/" className="btn bt-outline-info fw-bold  me-5 Home text-decoration-none" >Home</a>
+                    <Link to="/" className="btn bt-outline-info fw-bold  me-5 Home text-decoration-none" >Home</Link>
                     {user.username && <Link to="/create" className="btn bt-outline-success fw-bold  mx-2 Create" >Create</Link>}
                     <Link to="" className="btn bt-outline-warning fw-bold  ms-5 Contact" >Contact</Link>
                 </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
                 </div>
 
             </nav>
-            <div class={`offcanvas bg-dark offcanvas-end vh-100 ${account ? 'show' : 'd-block overflow-auto'}`} data-bs-scroll="true" tabindex="-1" id="navbarSupportedContent" aria-labelledby="AccountLabel" style={{ borderLeft: "3px solid blue" }}>
+            <div class={`offcanvas bg-dark  text-primary offcanvas-end vh-100 ${account ? 'show' : 'd-block overflow-auto'}`} data-bs-scroll="true" tabindex="-1" id="navbarSupportedContent" aria-labelledby="AccountLabel" style={{ borderLeft: "3px solid blue" }}>
                 <div className='offcanvas-header w-100 d-flex justify-content-center mb-4' style={{ boxShadow: "#ffffff6e 10px 1px 12px 1px", zIndex: "10" }}>
                     <div>
                         <i className='bi bi-book' style={{ fontSize: "8vw" }}></i>
@@ -65,7 +65,7 @@ const Navbar = () => {
                 </div>
                 <div className=' '>
                     {user.username ? <center>
-                        <div><a herf="/" className="btn btn-outline-info fw-bold mx-1 mt-3">Home</a></div>
+                        <div><Link to="/" className="btn btn-outline-info fw-bold mx-1 mt-3">Home</Link></div>
                         <div><Link to="/create" className="btn btn-outline-success fw-bold mx-1 mt-3">Create</Link></div>
                         <div><Link to="" className="btn btn-outline-warning fw-bold mx-1 mt-3">Contact</Link></div>
                         <div>

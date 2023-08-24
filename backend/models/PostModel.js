@@ -21,7 +21,16 @@ const sequelize = new Sequelize({
     host: process.env.DATABASE_HOST,
     database: process.env.DATABASE,
     username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS
+    password: process.env.DATABASE_PASS,
+    logging: false,//This will pause the regular Message on executing the frontend so that backend doesn't get too much busy 
+    /* 
+    Executing (default): SELECT `id`,
+     `userId`, `title`, `description`,
+      `file`, `postedby`, `createdAt`,
+       `updatedAt` FROM `posts` 
+        AS `posts`;
+    This is the messege that is showing every render from the front end and it is too much annoying when you use the useEffect for the re-rendering
+        */
 });
 
 const PostModel = sequelize.define('posts', {
