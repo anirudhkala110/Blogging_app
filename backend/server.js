@@ -284,7 +284,9 @@ app.post('/create', verifyUser, upload.single('file'), (req, res) => {
 /* Showing the data on home page */
 
 app.get('/get-all-posts', (req, res) => {
-    PostModel.findAll()
+    PostModel.findAll({
+        order: [['updatedAt', 'DESC']] // Order by updatedAt in descending order
+    })
         .then(posts => { return res.json(posts) })
         .catch(err => console.log(err))
 })
