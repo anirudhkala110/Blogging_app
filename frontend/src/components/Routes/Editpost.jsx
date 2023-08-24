@@ -66,7 +66,7 @@ const Editpost = () => {
             <div className='bg-white w-100 displaymethod py-1 px-1'>
                 <div className='text-light bg-dark p-3' style={{ maxWidth: '300px' }} ><AddLeft /></div>
                 {
-                    user ? <div>
+                    user.username===`${postedby}` ? <div>
                         <form onSubmit={e => handleSubmit(e)} className='border shadow p-3'>
                             {msg && <center className={`w-100 fw-bolder alert d-flex justify-content-between align-items-center  ${msg_type === "error" ? 'alert-danger' : 'alert-success'}`}>{msg} <i className='bi bi-x fs-4' style={{ cursor: "pointer" }} onClick={e => handleClose()}></i></center>}
                             <center className='fs-1 fw-bolder'>Create New Blog</center>
@@ -83,7 +83,7 @@ const Editpost = () => {
                             <button type='submit' className='btn btn-success w-100' >Update</button>
                         </form>
                         <button className='btn fw-bold btn-primary mx-1 my-1 '> <a href='/' className='text-decoration-none text-light'> Go Back </a></button>
-                    </div> : <div>Not Authorised to access this page
+                    </div> : <div className='alert alert-danger d-flex align-items-center'>Not Authorised to access this page
                         <button className='btn fw-bold btn-primary mx-1 my-1 '> <a href='/' className='text-decoration-none text-light'> Go Back </a></button>
                     </div>
                 }

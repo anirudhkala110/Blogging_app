@@ -35,7 +35,7 @@ function App() {
           <Route exact path='/register' element={<Register />} />
           <Route exact path='/create' element={<Create />} />
           <Route exact path='/post/:id/:postedby' element={<Posts />} />
-          <Route exact path='/edit-post/:id' element={<Editpost />} />
+          <Route exact path='/edit-post/:id/:postedby' element={<Editpost />} />
         </Routes>
         <Footer />
       </Router>

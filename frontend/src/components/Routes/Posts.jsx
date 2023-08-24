@@ -46,7 +46,7 @@ const Posts = () => {
                                 {user.username === `${postedby}` ? <>
                                     <p className='card-body border bg-light text-black fw-bold shadow-lg rounded-2 mt-2 w-100 mb-1' style={{ zIndex: "10" }}>{post.description}</p>
                                     <div className='container mt-1 bg-white my-2 d-flex justify-content-start align-items-center' style={{ zIndex: "20" }}>
-                                        <Link to={`/edit-post/${id}`} className='btn btn-outline-success fw-bold fs-6 my-1 mx-5 rounded-0 btnhover'>Edit</Link>
+                                        <Link to={`/edit-post/${id}/${postedby}`} className='btn btn-outline-success fw-bold fs-6 my-1 mx-5 rounded-0 btnhover'>Edit</Link>
                                         <button className='btn btn-outline-danger fw-bold fs-6 my-1 mx-5 rounded-0 btnhover' onClick={e => handleDelete(post.id)}>Delete</button>
                                     </div></>
                                     :
@@ -56,7 +56,7 @@ const Posts = () => {
                         </div>
                         {<button className='btn fw-bold btn-primary m-1 '> <a href='/' className='text-decoration-none text-light'> Go Back </a></button>}
                     </div>}
-                    { msg_type &&<div className='alert alert-danger my-5 align-items-center d-flex'>
+                    {msg_type && <div className='alert alert-danger my-5 align-items-center d-flex'>
                         {msg}
                         {<button className='fw-bold btn-success mx-1 btn btn-success my-1'> <a href='/' className='text-decoration-none text-light'> Go Back </a></button>}
                     </div>}
